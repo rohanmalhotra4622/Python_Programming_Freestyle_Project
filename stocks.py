@@ -114,18 +114,32 @@ print('STATISTICS BASED ON DAILY PERCENT CHANGES')
 stats = pct_change.describe()
 stats = stats.rename(index={ 'std' : 'STD_DEV'  })
 std_dev = stats.loc['STD_DEV']
+
+#most_volatile=New_DF[['Overall_Score']]
+most_volatile=std_dev.sort_values( ascending= False)
+#most_volatile = most_volatile.head(5)
+most_volatile_stock= most_volatile.index[0]
+least_volatile_stock= most_volatile.index[-1]
+#most_volatile=most_volatile.sort_index(ascending=True)
+#y=most_volatile[most_volatile['Overall_Score']== Best_Player['Overall_Score'].max()].index[0]
+#y
+
+
+
+
 #std_dev.rename("STD_DEV.")
 
 fig, ax = plt.subplots()
-std_dev.plot(ax=ax, kind='barh',figsize=(6,4), width=.25, color='lightblue')
-ax.set_title('Highest Volatility', fontsize=14, loc='left')
-ax.set_ylabel('Stock Ticker',color='red',fontsize=12)
-ax.set_xlabel('Daily Standard Deviation',color='red',fontsize=12)
+std_dev.plot(ax=ax, kind='barh',figsize=(6,4), width=.25, color='blue')
+ax.set_title('Highest Volatility', fontsize=20, loc='left')
+ax.set_ylabel('Stock Ticker',color='red',fontsize=16)
+ax.set_xlabel('Daily Standard Deviation',color='red',fontsize=16)
 #ax.set_xlim(0,4)                 
 ax.tick_params(axis='x',labelcolor='blue')
 ax.tick_params(axis='y',labelcolor='blue')
 ax.legend(loc='best')
-#ax.get_children()[list(Best_Player.index).index(y)].set_color('orange')
+ax.get_children()[list(std_dev.index).index(most_volatile_stock)].set_color('orange')
+ax.get_children()[list(std_dev.index).index(least_volatile_stock)].set_color('red')
 plt.show()
 
 
