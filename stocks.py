@@ -2,8 +2,6 @@
 
 
 #from pandas.io.data import DataReader
-#print(ibm['Adj Close'])
-
 #pip install pandas-datareader
 import sys
 import pandas as pd
@@ -11,6 +9,10 @@ import pandas_datareader as pdr
 from datetime import datetime , date, time, timedelta
 import matplotlib.pyplot as plt
 
+
+
+
+'''
 portfolio = []
 while True:
     try:
@@ -26,15 +28,25 @@ while True:
         sys.exit()
 
 portfolio = portfolio[:-1]
+'''
+portfolio = []
+dic = {}
+while True:
+    try:
+        selected_id = input("Please enter stock: " )
+        if type(selected_id) == str:
+            portfolio.append(selected_id)
+        if selected_id == 'DONE' or selected_id == 'done':
+            break
+        else:
+            total_shares = int(input("please enter number of shares:"))
+            dic.update({selected_id : total_shares})
+    except ValueError:
+        print('Entry seems invalid; Please try again:')
+        sys.exit()
 
-#my_portfolio = []
-#for i in portfolio:
-#    if isinstance(int(i) , int):
-#        my_portfolio.append(i)
-#if isinstance(int(symbol) , int):
-        #sys.exit()
-#stock1 = input("Please enter stock: ")
-#stock2 = input("Please enter stock: ")
+portfolio = portfolio[:-1]
+
 
 end_date = datetime.today()
 beg_date = end_date - timedelta(20)
@@ -57,7 +69,7 @@ print('---------------------------------------------------------')
 print('MY PORTFOLIO')
 # Convert portfolio, which is a list into a dataframe
 
-df = pd.DataFrame({'Ticker':portfolio} )
+#df = pd.DataFrame({'Ticker':portfolio} )
 my_portfolio = pdr.get_data_yahoo(portfolio, start=beg_date, end=end_date)
 my_portfolio = my_portfolio['Adj Close'].reset_index()
 
@@ -97,8 +109,6 @@ print(pct_change)
 
 print('---------------------------------------------------------')
 
-stats = pct_change.describe()
-
 #jpm_percent = jpm.pct_change()  # calculate percent change
 #print(jpm_percent)
 #sp500_percent = sp500.pct_change()  # calculate percent change
@@ -112,22 +122,20 @@ print('---------------------------------------------------------')
 
 print('STATISTICS BASED ON DAILY PERCENT CHANGES')
 stats = pct_change.describe()
+print(stats)
 stats = stats.rename(index={ 'std' : 'STD_DEV'  })
 std_dev = stats.loc['STD_DEV']
 
-#most_volatile=New_DF[['Overall_Score']]
+## select most and least volatile stocks
 most_volatile=std_dev.sort_values( ascending= False)
 #most_volatile = most_volatile.head(5)
 most_volatile_stock= most_volatile.index[0]
 least_volatile_stock= most_volatile.index[-1]
-#most_volatile=most_volatile.sort_index(ascending=True)
-#y=most_volatile[most_volatile['Overall_Score']== Best_Player['Overall_Score'].max()].index[0]
-#y
 
 
 
 
-#std_dev.rename("STD_DEV.")
+
 
 fig, ax = plt.subplots()
 std_dev.plot(ax=ax, kind='barh',figsize=(6,4), width=.25, color='blue')
@@ -142,9 +150,29 @@ ax.get_children()[list(std_dev.index).index(most_volatile_stock)].set_color('ora
 ax.get_children()[list(std_dev.index).index(least_volatile_stock)].set_color('red')
 plt.show()
 
-
+##########
+value_stocks = {}
+print(list(dic.keys()))
+print(len(list(dic.keys())))
+for i in list(dic.keys()):
+    value_stocks.update({i: int(dic[i]) * my_portfolio[i].iloc[-1] })
 
 breakpoint()
+
+# my_portfolio['jpm'].iloc[-1]
+
+
+########
+
+breakpoint()
+value_stocks = {}
+# my_portfolio['jpm'].iloc[-1]
+
+
+
+
+
+
 print('---------------------------------------------------------')
 fig , ax = plt.subplots()
 pct_change.plot(ax=ax)
