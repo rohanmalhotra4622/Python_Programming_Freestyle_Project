@@ -59,7 +59,7 @@ sp500 = pdr.get_data_yahoo(symbols='^gspc', start=beg_date , end=end_date)
 sp500 = sp500['Adj Close']
 sp500 = pd.DataFrame(sp500).reset_index()
 sp500.columns = ['Date','sp500']
-
+sp500 = sp500.round(2)
 #sp500 = sp500.rename(columns={ 'Open' : 'SP500-Open'  , 'Adj Close':'SP500-Close'})
 #sp500 = sp500.rename(columns={ 'Adj Close':'SP500-Close'})
 #sp500 = sp500.reset_index()
@@ -72,7 +72,7 @@ print('MY PORTFOLIO')
 #df = pd.DataFrame({'Ticker':portfolio} )
 my_portfolio = pdr.get_data_yahoo(portfolio, start=beg_date, end=end_date)
 my_portfolio = my_portfolio['Adj Close'].reset_index()
-
+my_portfolio = my_portfolio.round(2)
 print(my_portfolio)
 print('---------------------------------------------------------')
 
@@ -117,7 +117,7 @@ print('---------------------------------------------------------')
 #### charting`````
 
 print('CORRELATIONS BASED ON DAILY CLOSING PRICES')
-print(combined_df.corr())
+print(combined_df.corr().round(2))
 print('---------------------------------------------------------')
 
 print('STATISTICS BASED ON DAILY PERCENT CHANGES')
@@ -150,27 +150,36 @@ ax.get_children()[list(std_dev.index).index(most_volatile_stock)].set_color('ora
 ax.get_children()[list(std_dev.index).index(least_volatile_stock)].set_color('red')
 plt.show()
 
-##########
+# Create a dictionary of stock symbol as keys and total in dollar amount as values
 value_stocks = {}
-print(list(dic.keys()))
-print(len(list(dic.keys())))
+#print(list(dic.keys()))
+#print(len(list(dic.keys())))
 for i in list(dic.keys()):
     value_stocks.update({i: int(dic[i]) * my_portfolio[i].iloc[-1] })
 
-breakpoint()
 
 # my_portfolio['jpm'].iloc[-1]
+
+labels = list(value_stocks.keys())
+#colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue','pink']
+#sizes = ([hof_df_PCT['Percentage'][0].round(4),hof_df_PCT['Percentage'][1].round(4),hof_df_PCT['Percentage'][2].round(4),
+         #hof_df_PCT['Percentage'][3].round(4),hof_df_PCT['Percentage'][4].round(4)])
+sizes = list(value_stocks.values())
+#explode=(0.1,0.1,0.1,0.2,0.2)
+#plt.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=40)
+plt.pie(sizes,  labels=labels, autopct='%1.1f%%', shadow=True, startangle=40)
+plt.axis('equal')
+plt.show()
+breakpoint()
+
+
+
+
+
+
 
 
 ########
-
-breakpoint()
-value_stocks = {}
-# my_portfolio['jpm'].iloc[-1]
-
-
-
-
 
 
 print('---------------------------------------------------------')
@@ -180,20 +189,7 @@ ax.legend(loc = 'best')
 ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
 #ax.ticklabel_format(useOffset = False)
 plt.show()
-#
-#
-#fig , ax = plt.subplots()
-#js.plot(ax=ax)
-#ax.legend(loc = 'best')
-#ax.set_title('GDP Data' , fontsize = 24 , loc = 'left')
-##ax.ticklabel_format(useOffset = False)
-#plt.show()
 
-#### charting`````
-
-
-#print(jpm_sp500)
-#print("That's cool!!")
 
 
 
