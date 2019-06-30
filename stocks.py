@@ -3,6 +3,7 @@
 
 #from pandas.io.data import DataReader
 #pip install pandas-datareader
+import os
 import sys
 import pandas as pd
 import pandas_datareader as pdr
@@ -10,8 +11,8 @@ from datetime import datetime , date, time, timedelta
 import matplotlib.pyplot as plt
 
 
-
-
+#url  = r'C:\Users\Rohan Malhotra\Documents\GitHub\Python_Programming_Freestyle_Project\stats.xlsx'
+url = os.path.join(os.path.dirname(__file__),  "stats.csv")
 '''
 portfolio = []
 while True:
@@ -33,7 +34,7 @@ portfolio = []
 dic = {}
 while True:
     try:
-        selected_id = input("Please enter stock: " )
+        selected_id = input("Please enter stock: " ).upper()
         if type(selected_id) == str:
             portfolio.append(selected_id)
         if selected_id == 'DONE' or selected_id == 'done':
@@ -49,7 +50,7 @@ portfolio = portfolio[:-1]
 
 
 end_date = datetime.today()
-beg_date = end_date - timedelta(20)
+beg_date = end_date - timedelta(365)
 
 # Define the Index, this should be the benchmark we want to compare against.  
 print('---------------------------------------------------------')
@@ -58,7 +59,7 @@ sp500 = pdr.get_data_yahoo(symbols='^gspc', start=beg_date , end=end_date)
 #sp500 = sp500[[ 'Open','Adj Close']]
 sp500 = sp500['Adj Close']
 sp500 = pd.DataFrame(sp500).reset_index()
-sp500.columns = ['Date','sp500']
+sp500.columns = ['Date','SP500']
 sp500 = sp500.round(2)
 #sp500 = sp500.rename(columns={ 'Open' : 'SP500-Open'  , 'Adj Close':'SP500-Close'})
 #sp500 = sp500.rename(columns={ 'Adj Close':'SP500-Close'})
@@ -122,11 +123,12 @@ print('---------------------------------------------------------')
 
 print('STATISTICS BASED ON DAILY PERCENT CHANGES')
 stats = pct_change.describe()
-print(stats)
 stats = stats.rename(index={ 'std' : 'STD_DEV'  })
-std_dev = stats.loc['STD_DEV']
+print(stats)
+stats.to_csv(url)
 
 ## select most and least volatile stocks
+std_dev = stats.loc['STD_DEV']
 most_volatile=std_dev.sort_values( ascending= False)
 #most_volatile = most_volatile.head(5)
 most_volatile_stock= most_volatile.index[0]
@@ -158,23 +160,24 @@ for i in list(dic.keys()):
     value_stocks.update({i: int(dic[i]) * my_portfolio[i].iloc[-1] })
 
 
+## Create Pie Chart showing value by percent owned
 # my_portfolio['jpm'].iloc[-1]
+ex = [0.1 for i in range(len(list(value_stocks.keys())))]
+#ex = []
+#for q in range(len(list(value_stocks.keys()))):
+#    ex.append(q/10)
+explode = tuple(ex)
+#print(explode)
 
 labels = list(value_stocks.keys())
-#colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue','pink']
-#sizes = ([hof_df_PCT['Percentage'][0].round(4),hof_df_PCT['Percentage'][1].round(4),hof_df_PCT['Percentage'][2].round(4),
-         #hof_df_PCT['Percentage'][3].round(4),hof_df_PCT['Percentage'][4].round(4)])
 sizes = list(value_stocks.values())
-#explode=(0.1,0.1,0.1,0.2,0.2)
+explode
 #plt.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', shadow=True, startangle=40)
-plt.pie(sizes,  labels=labels, autopct='%1.1f%%', shadow=True, startangle=40)
+plt.title('% Stock Values' , bbox={'facecolor':'0.5', 'pad':4} , fontsize = 14 )
+plt.pie(sizes, explode = explode ,labels = labels, autopct='%1.1f%%', shadow=True, startangle=140)
 plt.axis('equal')
 plt.show()
-breakpoint()
-
-
-
-
+#breakpoint()
 
 
 
@@ -190,9 +193,9 @@ ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
 #ax.ticklabel_format(useOffset = False)
 plt.show()
 
+breakpoint()
 
-
-
+print('hello')
 
 
 
