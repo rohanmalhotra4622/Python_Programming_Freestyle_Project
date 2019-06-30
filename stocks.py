@@ -12,7 +12,11 @@ import matplotlib.pyplot as plt
 
 
 #url  = r'C:\Users\Rohan Malhotra\Documents\GitHub\Python_Programming_Freestyle_Project\stats.xlsx'
-url = os.path.join(os.path.dirname(__file__),  "stats.csv")
+portfolio_url = os.path.join(os.path.dirname(__file__),  "portfolio.csv")
+combined_portfolio_url = os.path.join(os.path.dirname(__file__),  "combined_portfolio.csv")
+percent_change_url = os.path.join(os.path.dirname(__file__),  "percent_changes.csv")
+correlations_url = os.path.join(os.path.dirname(__file__),  "correlation.csv")
+stats_url = os.path.join(os.path.dirname(__file__),  "stats.csv")
 '''
 portfolio = []
 while True:
@@ -75,6 +79,7 @@ my_portfolio = pdr.get_data_yahoo(portfolio, start=beg_date, end=end_date)
 my_portfolio = my_portfolio['Adj Close'].reset_index()
 my_portfolio = my_portfolio.round(2)
 print(my_portfolio)
+my_portfolio.to_csv(portfolio_url)
 print('---------------------------------------------------------')
 
 #jpm = pdr.get_data_yahoo(symbols=stock1, start=datetime(2019, 4, 10), end=datetime(2019, 6, 24))
@@ -99,6 +104,7 @@ combined_df = combined_df.set_index('Date')
 #js = jpm_sp500[['Date' , 'SP500-Close' , str(stock1).upper() + ' Close']]
 #js = js.set_index('Date')
 print(combined_df)
+combined_df.to_csv(combined_portfolio_url)
 print('---------------------------------------------------------')
 
 
@@ -106,6 +112,7 @@ print('---------------------------------------------------------')
 # Calculate Daily Percent Returns
 pct_change = combined_df.pct_change()
 print('Daily % Change')
+pct_change.to_csv(percent_change_url)
 print(pct_change)
 
 print('---------------------------------------------------------')
@@ -119,13 +126,14 @@ print('---------------------------------------------------------')
 
 print('CORRELATIONS BASED ON DAILY CLOSING PRICES')
 print(combined_df.corr().round(2))
+combined_df.corr().round(2).to_csv(correlations_url)
 print('---------------------------------------------------------')
 
 print('STATISTICS BASED ON DAILY PERCENT CHANGES')
 stats = pct_change.describe()
 stats = stats.rename(index={ 'std' : 'STD_DEV'  })
 print(stats)
-stats.to_csv(url)
+stats.to_csv(stats_url)
 
 ## select most and least volatile stocks
 std_dev = stats.loc['STD_DEV']
@@ -182,7 +190,7 @@ plt.show()
 
 
 
-########
+# Time Series Line Graph for percent changes
 
 
 print('---------------------------------------------------------')
@@ -190,6 +198,10 @@ fig , ax = plt.subplots()
 pct_change.plot(ax=ax)
 ax.legend(loc = 'best')
 ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
+ax.set_ylabel('Percent Change',color='red',fontsize=16)
+ax.set_xlabel('Date',color='red',fontsize=16)
+ax.tick_params(axis='x',labelcolor='blue')
+ax.tick_params(axis='y',labelcolor='blue')
 #ax.ticklabel_format(useOffset = False)
 plt.show()
 
