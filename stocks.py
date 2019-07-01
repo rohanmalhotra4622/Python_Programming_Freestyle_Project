@@ -74,7 +74,7 @@ print('---------------------------------------------------------')
 
 
 # Calculate Daily Percent Returns
-pct_change = combined_df.pct_change()
+pct_change = combined_df.pct_change().round(6)
 print('Daily % Change')
 pct_change.to_csv(percent_change_url)
 print(pct_change)
