@@ -10,13 +10,12 @@ import matplotlib.pyplot as plt
 import statsmodels.formula.api as smf
 
 ## Define URL's to which csv data will be posted
-#url  = r'C:\Users\Rohan Malhotra\Documents\GitHub\Python_Programming_Freestyle_Project\stats.xlsx'
 portfolio_url = os.path.join(os.path.dirname(__file__),  "portfolio.csv")
 combined_portfolio_url = os.path.join(os.path.dirname(__file__),  "combined_portfolio.csv")
 percent_change_url = os.path.join(os.path.dirname(__file__),  "percent_changes.csv")
 correlations_url = os.path.join(os.path.dirname(__file__),  "correlation.csv")
 stats_url = os.path.join(os.path.dirname(__file__),  "stats.csv")
-regression_url =  os.path.join(os.path.dirname(__file__),  "regression.csv")
+#regression_url =  os.path.join(os.path.dirname(__file__),  "regression.csv")
 
 ## Create an empty list and dictionary and append/update based on data inputted. 
 
@@ -38,6 +37,7 @@ while True:
 
 
 portfolio = portfolio[:-1]
+
 
 ### Define time range
 end_date = datetime.today()
@@ -137,21 +137,22 @@ plt.axis('equal')
 plt.show()
 
 
-# Time Series Line Graph for percent changes
+# Time Series Line Graph for percent changes if portfolio has two or less stocks
+if len(portfolio) <= 2:
+    print('---------------------------------------------------------')
+    fig , ax = plt.subplots()
+    pct_change.plot(ax=ax)
+    ax.legend(loc = 'best')
+    ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
+    ax.set_ylabel('Percent Change',color='red',fontsize=16)
+    ax.set_xlabel('Date',color='red',fontsize=16)
+    ax.tick_params(axis='x',labelcolor='blue')
+    ax.tick_params(axis='y',labelcolor='blue')
+    #ax.ticklabel_format(useOffset = False)
+    plt.show()
 
+# Create bar graph showing correlation with the SP 500
 print('---------------------------------------------------------')
-fig , ax = plt.subplots()
-pct_change.plot(ax=ax)
-ax.legend(loc = 'best')
-ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
-ax.set_ylabel('Percent Change',color='red',fontsize=16)
-ax.set_xlabel('Date',color='red',fontsize=16)
-ax.tick_params(axis='x',labelcolor='blue')
-ax.tick_params(axis='y',labelcolor='blue')
-#ax.ticklabel_format(useOffset = False)
-plt.show()
-
-##########################
 corr_1 = corr['SP500']
 least_correlated = corr_1.sort_values( ascending= False)
 least_correlated_stock= least_correlated.index[-1]
@@ -166,7 +167,8 @@ ax.tick_params(axis='y',labelcolor='blue')
 ax.legend(loc='best')
 ax.get_children()[list(corr_1.index).index(least_correlated_stock)].set_color('red')
 plt.show()
-##############################
+
+## Create regression table for the most volatile stock
 
 reg_table = smf.ols( most_volatile_stock + ' ~ ' + 'SP500' , data=combined_df).fit().summary()
 #reg_table = smf.ols('XES ~ SP500' , data=combined_df).fit().summary()
