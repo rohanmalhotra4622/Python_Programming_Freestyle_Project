@@ -1,3 +1,12 @@
+combined_portfolio.csv
+correlation.csv
+portfolio.csv
+percent_changes.csv
+stats.csv
+
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

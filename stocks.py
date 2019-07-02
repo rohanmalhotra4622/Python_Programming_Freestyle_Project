@@ -16,6 +16,7 @@ combined_portfolio_url = os.path.join(os.path.dirname(__file__),  "combined_port
 percent_change_url = os.path.join(os.path.dirname(__file__),  "percent_changes.csv")
 correlations_url = os.path.join(os.path.dirname(__file__),  "correlation.csv")
 stats_url = os.path.join(os.path.dirname(__file__),  "stats.csv")
+regression_url =  os.path.join(os.path.dirname(__file__),  "regression.csv")
 
 ## Create an empty list and dictionary and append/update based on data inputted. 
 
@@ -58,9 +59,11 @@ print('MY PORTFOLIO')
 my_portfolio = pdr.get_data_yahoo(portfolio, start=beg_date, end=end_date)
 my_portfolio = my_portfolio['Adj Close'].reset_index()
 my_portfolio = my_portfolio.round(2)
+##my_portfolio = my_portfolio.dropna(axis = 1, how = 'all')  ### 
 print(my_portfolio)
 my_portfolio.to_csv(portfolio_url)
 print('---------------------------------------------------------')
+
 
 
 # Merge the  dataframes
@@ -128,7 +131,7 @@ explode = tuple(ex)
 
 labels = list(value_stocks.keys())
 sizes = list(value_stocks.values())
-plt.title('% Stock Values' , bbox={'facecolor':'0.5', 'pad':4} , fontsize = 14 )
+plt.title('% Stock Values' , bbox={'facecolor':'0.5', 'pad':4} , loc = 'left',fontsize = 14 )
 plt.pie(sizes, explode = explode ,labels = labels, autopct='%1.1f%%', shadow=True, startangle=140)
 plt.axis('equal')
 plt.show()
@@ -148,10 +151,27 @@ ax.tick_params(axis='y',labelcolor='blue')
 #ax.ticklabel_format(useOffset = False)
 plt.show()
 
+##########################
+corr_1 = corr['SP500']
+least_correlated = corr_1.sort_values( ascending= False)
+least_correlated_stock= least_correlated.index[-1]
 
-#reg_table = smf.ols("'" + most_volatile_stock + ' ~ ' + 'SP500' + "'" , data=combined_df).fit().summary()
+fig, ax = plt.subplots()
+corr_1.plot(ax=ax, kind='bar',figsize=(6,4), width=.25, color='blue')
+ax.set_title('Correlation with SP500', fontsize=20, loc='left')
+ax.set_ylabel('Correlation',color='red',fontsize=16)
+ax.set_xlabel('Stock Ticker',color='red',fontsize=16)                
+ax.tick_params(axis='x',labelcolor='blue')
+ax.tick_params(axis='y',labelcolor='blue')
+ax.legend(loc='best')
+ax.get_children()[list(corr_1.index).index(least_correlated_stock)].set_color('red')
+plt.show()
+##############################
+
+reg_table = smf.ols( most_volatile_stock + ' ~ ' + 'SP500' , data=combined_df).fit().summary()
 #reg_table = smf.ols('XES ~ SP500' , data=combined_df).fit().summary()
-#print(reg_table)
+print(reg_table)
+reg_table
 breakpoint()
 
 print('hello')
