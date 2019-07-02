@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import statsmodels.formula.api as smf
 
 ## Define URL's to which csv data will be posted
-portfolio_url = os.path.join(os.path.dirname(__file__),  "portfolio.csv")
+portfolio_url = os.path.join(os.path.dirname(__file__),  ".", "portfolio.csv")
 combined_portfolio_url = os.path.join(os.path.dirname(__file__),  "combined_portfolio.csv")
 percent_change_url = os.path.join(os.path.dirname(__file__),  "percent_changes.csv")
 correlations_url = os.path.join(os.path.dirname(__file__),  "correlation.csv")
@@ -172,9 +172,8 @@ plt.show()
 ## Create regression table for the most volatile stock
 
 reg_table = smf.ols( most_volatile_stock + ' ~ ' + 'SP500' , data=combined_df).fit().summary()
-#reg_table = smf.ols('XES ~ SP500' , data=combined_df).fit().summary()
 print(reg_table)
-reg_table
+
 breakpoint()
 
 print('hello')
