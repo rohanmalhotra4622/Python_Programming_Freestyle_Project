@@ -29,10 +29,10 @@ while True:
         if selected_id == 'DONE' or selected_id == 'done':
             break
         else:
-            total_shares = int(input("please enter number of shares:"))
+            total_shares = int(input("please enter number of shares: "))
             dic.update({selected_id : total_shares})
     except ValueError:
-        print('Entry seems invalid; Please try again:')
+        print('Entry seems invalid; Please try again: ')
         sys.exit()
 
 
@@ -138,18 +138,19 @@ plt.show()
 
 
 # Time Series Line Graph for percent changes if portfolio has two or less stocks
-if len(portfolio) <= 2:
-    print('---------------------------------------------------------')
-    fig , ax = plt.subplots()
-    pct_change.plot(ax=ax)
-    ax.legend(loc = 'best')
-    ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
-    ax.set_ylabel('Percent Change',color='red',fontsize=16)
-    ax.set_xlabel('Date',color='red',fontsize=16)
-    ax.tick_params(axis='x',labelcolor='blue')
-    ax.tick_params(axis='y',labelcolor='blue')
-    #ax.ticklabel_format(useOffset = False)
-    plt.show()
+#if len(portfolio) <= 2:
+print('---------------------------------------------------------')
+fig , ax = plt.subplots()
+pct_change.plot(ax=ax , subplots = True, sharey = True , sharex = True)  # colormap = 'cubehelix'
+ax.legend(loc = 'right')
+#ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
+#ax.set_ylabel('Percent Change',color='red',fontsize=16)
+#ax.set_xlabel('Date',color='red',fontsize=16)
+#ax.tick_params(axis='x',labelcolor='blue')
+#ax.tick_params(axis='y',labelcolor='blue')
+#ax.ticklabel_format(useOffset = False)
+plt.suptitle('Percent Daily Returns' , size = 24 , color = 'blue')
+plt.show()
 
 # Create bar graph showing correlation with the SP 500
 print('---------------------------------------------------------')
