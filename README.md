@@ -33,7 +33,7 @@ The goal of this project is to extract stock information from Yahoo Finance and 
 
 The user will be required to enter the stocks and the number of shares that they own.  When the user is finished entering the portfolio, they should use 'done' or 'DONE' to see the results.  The code starts of with an empty dictionary labeled 'dic' that will be updated with the 'stock names' as 'keys' and the 'number of shares' as 'values'.  In addition,  there is also an empty list labeled 'portfolio' that will be appended when we enter the stock names.  
 
-The range for which the data is pulled is for the last one year.  The user has the ability ot change this time period. I have set the variable 'end_date'  as todays date and the variable 'beg_date' with a timedelta of the previous 365 days.  The user can change this beggining date value by inputting a different value in the 'beg_date' variable.
+The range for which the data is pulled is for the last one year.  The user has the ability to change this time period. I have set the variable 'end_date'  as todays date and the variable 'beg_date' with a timedelta of the previous 365 days.  The user can change this beggining date value by inputting a different value in the 'beg_date' variable.
 
 We want to compare our portfolio aginst the S&P 500 index, since that is considered a diversified portfolio.  The code will pull the data for the SP500 index and our portfolio of stocks inputted. Several varibales and dataframes will be created that are mentioned below.  
 
@@ -47,11 +47,11 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 5) my_portfolio --> this is a DF of the stocks we input for the time range choosing only the Adj. Close Column.
 
-6) combined_df --> this is a DF that has the same contents as the DF above with the SP500 values.  This is done by merging the SP500 values retrieved  with our stock portfolio values.
+6) combined_df --> this is a DF that has the same contents as the DF above along with the SP500 values.  This is done by merging the SP500 values retrieved  with our stock portfolio values.
 
 7) pct_change --> this is DF of percent changes of the combined_df listed in the line above.  This is our measure of volatility.
 
-8) corr --> this is a DF of correlations based on daily closing prices and the not the percent changes of all the stocks in the portfolio with each other and the SP500
+8) corr --> this is a DF of correlations based on daily closing prices, and the not the percent changes of all the stocks in the portfolio with each other and the SP500
 
 9) corr_1 --> correlation of all the stocks vs. the SP500 only. This can be used to create a separate plot if user chooses.
 
@@ -77,7 +77,9 @@ Create a pie chart displaying the values of stocks owned in percentage terms.  I
 
 Create subplots of line graphs based on 'pct_changes' to show volatility over time.  The sub plots are important because if we have more than two stocks, the graph will be very cluttered. I have kept the axis to be of the same magnitude to better make sense of the visualizations.
 
-There is also a Bar chart displaying the correlations of all the stocks to the SP500 and each other.
+There is also a Bar chart displaying the correlations of all the stocks to the SP500 and to each other.
+
+The last step is a regression analysis of the most volatile stock against the SP500.  This could be a very useful tool for specific users.
 
 Finally, the DataFrames created are also saved as .csv files in the same location where the code is located. This will help the user if they want to look at the raw data.
 
