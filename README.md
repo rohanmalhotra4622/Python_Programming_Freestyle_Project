@@ -4,7 +4,7 @@ INSTALLATION:
 
 Depending upon their set up environment, the user may  need to install certain packages.  Please check the documentation for each to install the latest version.  For example, for the pandas_datareader, the installation instructions are given below. The packages used are as follows:
 
-# pip install pandas-datareader.
+ $ pip install pandas-datareader.
 
 1. pandas: To work with DataFrames
 
