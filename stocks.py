@@ -170,16 +170,6 @@ corr_1 = corr['SP500']
 least_correlated = corr_1.sort_values( ascending= False)
 least_correlated_stock= least_correlated.index[-1]
 
-#fig, ax = plt.subplots()
-#corr_1.plot(ax=ax, kind='bar',figsize=(6,4), width=.25, color='blue')
-#ax.set_title('Correlation with SP500', fontsize=20, loc='left')
-#ax.set_ylabel('Correlation',color='red',fontsize=16)
-#ax.set_xlabel('Stock Ticker',color='red',fontsize=16)                
-#ax.tick_params(axis='x',labelcolor='blue')
-#ax.tick_params(axis='y',labelcolor='blue')
-#ax.legend(loc='best')
-#ax.get_children()[list(corr_1.index).index(least_correlated_stock)].set_color('red')
-#plt.show()
 fig, ax = plt.subplots()
 corr.plot(ax=ax, kind='bar')
 ax.set_title('Correlation', fontsize=20, loc='left')
@@ -189,8 +179,6 @@ ax.tick_params(axis='x',labelcolor='blue')
 ax.tick_params(axis='y',labelcolor='blue')
 ax.legend(loc='best')
 plt.show()
-
-
 
 
 ## Create regression table for the most volatile stock
