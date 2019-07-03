@@ -113,10 +113,13 @@ stats.to_csv(stats_url)
 
 ## select most and least volatile stocks
 std_dev = stats.loc['STD_DEV']
+std_dev = (stats.loc['STD_DEV'] * (252**(1/2))) *100  # convert daily to annualized volatility
 most_volatile = std_dev.sort_values( ascending= False)
 most_volatile_stock = most_volatile.index[0]
 least_volatile_stock = most_volatile.index[-1]
-
+print('---------------------------------------------------------')
+print("Annualized Volatility")
+print(std_dev)  
 
 # Create a dictionary of stock symbol as keys and total in dollar amount as values
 
@@ -130,7 +133,7 @@ fig, ax = plt.subplots()
 std_dev.plot(ax=ax, kind='barh',figsize=(6,4), width=.25, color='blue')
 ax.set_title('Highest Volatility', fontsize=20, loc='left')
 ax.set_ylabel('Stock Ticker',color='red',fontsize=16)
-ax.set_xlabel('Daily Standard Deviation',color='red',fontsize=16)                
+ax.set_xlabel('Annualized Volatility',color='red',fontsize=16)                
 ax.tick_params(axis='x',labelcolor='blue')
 ax.tick_params(axis='y',labelcolor='blue')
 ax.legend(loc='best')
@@ -195,10 +198,10 @@ plt.show()
 reg_table = smf.ols( most_volatile_stock + ' ~ ' + 'SP500' , data=combined_df).fit().summary()
 print(reg_table)
 
-breakpoint()
-
+#breakpoint()
+print('---------------------------------------------------------')
 print('Good luck with your Investments!!!!')
-
+print('---------------------------------------------------------')
 
 
 
