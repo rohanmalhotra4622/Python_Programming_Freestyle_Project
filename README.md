@@ -4,20 +4,22 @@ INSTALLATION:
 
 Depending upon their set up environment, the user may  need to install certain packages.  Please check the documentation for each to install the latest version.  For example, for the pandas_datareader, the installation instructions are given below. The packages used are as follows:
 
-1. pandas   
+# pip install pandas-datareader.
 
-2.  pandas_DataReader   # pip install pandas-datareader
+1. pandas: To work with DataFrames
 
-3.  statsmodels   
+2.  pandas_DataReader: To extract information from Yahoo Finance
 
-4. matplotlib   
+3.  statsmodels: To perform regression analysis 
+
+4. matplotlib: To create plots and graphs
 
 The modules that need to be imported are as follows:
 
-1. datetime
-2. os
-3. sys
-4. timedelta
+1. datetime: to define the time period for pulling the data
+2. os: to write .csv files for the data produced so people can see the raw data if they so please
+3. sys: for validation purposes and exiting the system if non integers are entered for number of shares owned
+4. timedelta: perform additions and subtractions to determine time range
 
 EXECUTING THE CODE:
 
@@ -57,7 +59,7 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 10) stats --> this is a DF based on daily percent changes and displays key statistical measures.
 
-11) std_dev -->  this is a series, which can be thought of as a one column DF that has been extracted from the stats DF.  We sort the values in this series to identify  the most and least volatile stocks so we can display those with more transparency  in the plots.
+11) std_dev -->  this is a series, which can be thought of as a one column DF that has been extracted from the stats DF.  We sort the values in this series to identify  the most and least volatile stocks so we can display those with more transparency  in the plots. The std_dev is finally annualized in percentage terms so it is easy to understand.  
 
 12) value_stocks -->  this is another empty dictionary that gets updated to reflect the 'stock names' as 'keys' and the  '(shares owned * last stock prices)' as 'values'.  
 

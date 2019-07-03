@@ -113,7 +113,7 @@ stats.to_csv(stats_url)
 
 ## select most and least volatile stocks
 std_dev = stats.loc['STD_DEV']
-std_dev = (stats.loc['STD_DEV'] * (252**(1/2))) *100  # convert daily to annualized volatility
+std_dev = (stats.loc['STD_DEV'] * (252**(1/2))) *100  # convert daily volatility to annualized volatility in percenatge terms
 most_volatile = std_dev.sort_values( ascending= False)
 most_volatile_stock = most_volatile.index[0]
 least_volatile_stock = most_volatile.index[-1]
