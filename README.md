@@ -53,7 +53,7 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 8) corr --> this is a DF of correlations based on daily closing prices and the not the percent changes of all the stocks in the portfolio with each other and the SP500
 
-9) corr_1 --> correlation of all the stocks vs. the SP500 only
+9) corr_1 --> correlation of all the stocks vs. the SP500 only. This can be used to create a separate plot if user chooses.
 
 10) stats --> this is a DF based on daily percent changes and displays key statistical measures.
 
@@ -73,11 +73,11 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 Create a bar chart of the volatility of the stocks and color the  most and least volatile stocks differently from the rest.  This is done based on the std_dev series that was extracted from stats.
 
- Create a pie chart displaying the values of stocks owned in percentage terms.  I also made the pie pieces explode to better visualize the data. 
+Create a pie chart displaying the values of stocks owned in percentage terms.  I also made the pie pieces explode to better visualize the data. 
 
- Create subplots of line graphs based on 'pct_changes' to show volatility over time.  The sub plots are important because if we have more than two stocks, the graph will be very cluttered. I have kept the axis to be of the same magnitude to better make sense of the visualizations.
+Create subplots of line graphs based on 'pct_changes' to show volatility over time.  The sub plots are important because if we have more than two stocks, the graph will be very cluttered. I have kept the axis to be of the same magnitude to better make sense of the visualizations.
 
-There is also a Bar chart displaying the correlations of all the stocks to the SP500 and the stock with the lowest correlation is colored differently.
+There is also a Bar chart displaying the correlations of all the stocks to the SP500 and each other.
 
 Finally, the DataFrames created are also saved as .csv files in the same location where the code is located. This will help the user if they want to look at the raw data.
 

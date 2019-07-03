@@ -58,6 +58,7 @@ sp500 = pdr.get_data_yahoo(symbols='^gspc', start=beg_date , end=end_date)
 sp500 = sp500['Adj Close']
 sp500 = pd.DataFrame(sp500).reset_index()
 sp500.columns = ['Date','SP500']
+sp500 = sp500.dropna() ## drop null entries
 sp500 = sp500.round(2)
 print('----------------------------------------------------------------------------------')
 print('Portfolio' , dic , sep = '    ')
@@ -68,6 +69,7 @@ print('MY PORTFOLIO')
 
 my_portfolio = pdr.get_data_yahoo(portfolio, start=beg_date, end=end_date)
 my_portfolio = my_portfolio['Adj Close'].reset_index()
+my_portfolio = my_portfolio.dropna()  ## drop null entries
 my_portfolio = my_portfolio.round(2)
 ##my_portfolio = my_portfolio.dropna(axis = 1, how = 'all')  ### 
 print(my_portfolio)
@@ -165,16 +167,28 @@ corr_1 = corr['SP500']
 least_correlated = corr_1.sort_values( ascending= False)
 least_correlated_stock= least_correlated.index[-1]
 
+#fig, ax = plt.subplots()
+#corr_1.plot(ax=ax, kind='bar',figsize=(6,4), width=.25, color='blue')
+#ax.set_title('Correlation with SP500', fontsize=20, loc='left')
+#ax.set_ylabel('Correlation',color='red',fontsize=16)
+#ax.set_xlabel('Stock Ticker',color='red',fontsize=16)                
+#ax.tick_params(axis='x',labelcolor='blue')
+#ax.tick_params(axis='y',labelcolor='blue')
+#ax.legend(loc='best')
+#ax.get_children()[list(corr_1.index).index(least_correlated_stock)].set_color('red')
+#plt.show()
 fig, ax = plt.subplots()
-corr_1.plot(ax=ax, kind='bar',figsize=(6,4), width=.25, color='blue')
-ax.set_title('Correlation with SP500', fontsize=20, loc='left')
+corr.plot(ax=ax, kind='bar')
+ax.set_title('Correlation', fontsize=20, loc='left')
 ax.set_ylabel('Correlation',color='red',fontsize=16)
 ax.set_xlabel('Stock Ticker',color='red',fontsize=16)                
 ax.tick_params(axis='x',labelcolor='blue')
 ax.tick_params(axis='y',labelcolor='blue')
 ax.legend(loc='best')
-ax.get_children()[list(corr_1.index).index(least_correlated_stock)].set_color('red')
 plt.show()
+
+
+
 
 ## Create regression table for the most volatile stock
 
