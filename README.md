@@ -41,9 +41,9 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 4) beg_date --> end_date - timedelta(365)
 
-5) my_portfolio --> this is a DF of the stocks we entered for the time range choosing only the Adj. Close Column.
+5) my_portfolio --> this is a DF of the stocks we input for the time range choosing only the Adj. Close Column.
 
-6) combined_df --> this is a DF that has the same contents as the DF above with the SP500 values.  This is done by merging the SP500 values retrived with our stock portfolio values.
+6) combined_df --> this is a DF that has the same contents as the DF above with the SP500 values.  This is done by merging the SP500 values retrieved  with our stock portfolio values.
 
 7) pct_change --> this is DF of percent changes of the combined_df listed in the line above.  This is our measure of volatility.
 
@@ -53,7 +53,7 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 10) stats --> this is a DF based on daily percent changes and displays key statistical measures.
 
-11) std_dev -->  this is a series, which can be though of as a one column DF that has been extracted from the stats DF.  We sort the values in this series to identify the the most and least volatile stocks so we can display those with more transparecy in the plots.
+11) std_dev -->  this is a series, which can be thought of as a one column DF that has been extracted from the stats DF.  We sort the values in this series to identify  the most and least volatile stocks so we can display those with more transparency  in the plots.
 
 12) value_stocks -->  this is another empty dictionary that gets updated to reflect the 'stock names' as 'keys' and the  '(shares owned * last stock prices)' as 'values'.  
 
@@ -67,13 +67,13 @@ We want to compare our portfolio aginst the S&P 500 index, since that is conside
 
 17) least_correlated_stock --> self explanatory.
 
-We then create a bar chart of the volatility of the stocks and color the  most and least volatile stocks differently from the rest.  This is done based on the std_dev series that was extracted from stats.
+Create a bar chart of the volatility of the stocks and color the  most and least volatile stocks differently from the rest.  This is done based on the std_dev series that was extracted from stats.
 
-We then create a pie chart displaying the values of stocks owned in percentage terms.  I also made the pie pieces explode to better visualize the data. 
+ Create a pie chart displaying the values of stocks owned in percentage terms.  I also made the pie pieces explode to better visualize the data. 
 
-We also create also create subplots of line graphs based on 'pct_changes' to show volatility over time.  The sub plots are important because if we have more than two stocks, the graph will be very cluttered. I have kep the axix to be be of the same magnitude to better make sense of the visulaizations.
+ Create subplots of line graphs based on 'pct_changes' to show volatility over time.  The sub plots are important because if we have more than two stocks, the graph will be very cluttered. I have kept the axis to be of the same magnitude to better make sense of the visualizations.
 
-Theere is also a Bar chart displaying the correlations of all the stocks to the SP500 and the stock with the lowest correlation is colored differently.
+There is also a Bar chart displaying the correlations of all the stocks to the SP500 and the stock with the lowest correlation is colored differently.
 
 Finally, the DataFrames created are also saved as .csv files in the same location where the code is located. This will help the user if they want to look at the raw data.
 

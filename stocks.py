@@ -1,6 +1,6 @@
 
+## Portfolio Analysis
 
-#pip install pandas-datareader
 import os
 import sys
 import pandas as pd
@@ -9,8 +9,10 @@ from datetime import datetime , date, time, timedelta
 import matplotlib.pyplot as plt
 import statsmodels.formula.api as smf
 
+
 ## Define URL's to which csv data will be posted
-portfolio_url = os.path.join(os.path.dirname(__file__),  ".", "portfolio.csv")
+
+portfolio_url = os.path.join(os.path.dirname(__file__),   "portfolio.csv")
 combined_portfolio_url = os.path.join(os.path.dirname(__file__),  "combined_portfolio.csv")
 percent_change_url = os.path.join(os.path.dirname(__file__),  "percent_changes.csv")
 correlations_url = os.path.join(os.path.dirname(__file__),  "correlation.csv")
@@ -18,6 +20,12 @@ stats_url = os.path.join(os.path.dirname(__file__),  "stats.csv")
 #regression_url =  os.path.join(os.path.dirname(__file__),  "regression.csv")
 
 ## Create an empty list and dictionary and append/update based on data inputted. 
+
+
+
+print('---------------------------------------------------------')
+print('PORTFOLIO ANLYSIS')
+print('---------------------------------------------------------')
 
 portfolio = []
 dic = {}
@@ -40,18 +48,21 @@ portfolio = portfolio[:-1]
 
 
 ### Define time range
+
 end_date = datetime.today()
 beg_date = end_date - timedelta(365)
 
 # Pull data for the SP500; this should be the benchmark we want to compare against.  
 
-print('---------------------------------------------------------')
+
 sp500 = pdr.get_data_yahoo(symbols='^gspc', start=beg_date , end=end_date)
 sp500 = sp500['Adj Close']
 sp500 = pd.DataFrame(sp500).reset_index()
 sp500.columns = ['Date','SP500']
 sp500 = sp500.round(2)
-print('---------------------------------------------------------')
+print('---------------------------------------------------------------')
+print('Portfolio' , dic , sep = '    ')
+print('---------------------------------------------------------------')
 print('MY PORTFOLIO')
 
 ### Pull data for our portfolio of stocks
@@ -67,6 +78,7 @@ print('---------------------------------------------------------')
 
 
 # Merge the  dataframes
+
 print('MY PORTFOLIO vs. SP500')
 combined_df = sp500.merge(my_portfolio, left_on='Date',right_on= 'Date', how='inner' )
 combined_df = combined_df.set_index('Date')
@@ -77,6 +89,7 @@ print('---------------------------------------------------------')
 
 
 # Calculate Daily Percent Returns
+
 pct_change = combined_df.pct_change().round(6)
 print('Daily % Change')
 pct_change.to_csv(percent_change_url)
@@ -100,12 +113,12 @@ stats.to_csv(stats_url)
 ## select most and least volatile stocks
 std_dev = stats.loc['STD_DEV']
 most_volatile=std_dev.sort_values( ascending= False)
-#most_volatile = most_volatile.head(5)
 most_volatile_stock= most_volatile.index[0]
 least_volatile_stock= most_volatile.index[-1]
 
 
 # Create a dictionary of stock symbol as keys and total in dollar amount as values
+
 value_stocks = {}
 for i in list(dic.keys()):
     value_stocks.update({i: int(dic[i]) * my_portfolio[i].iloc[-1] })
@@ -126,9 +139,9 @@ plt.show()
 
 ## create pie chart 
 ## determine magnitude by which to explode the pie pieces.
+
 ex = [0.1 for i in range(len(list(value_stocks.keys())))]  
 explode = tuple(ex)
-
 labels = list(value_stocks.keys())
 sizes = list(value_stocks.values())
 plt.title('% Stock Values' , bbox={'facecolor':'0.5', 'pad':4} , loc = 'left',fontsize = 14 )
@@ -138,21 +151,16 @@ plt.show()
 
 
 # Time Series Line Graph for percent changes if portfolio has two or less stocks
-#if len(portfolio) <= 2:
+
 print('---------------------------------------------------------')
 fig , ax = plt.subplots()
 pct_change.plot(ax=ax , subplots = True, sharey = True , sharex = True)  # colormap = 'cubehelix'
 ax.legend(loc = 'right')
-#ax.set_title('Percent Daily Returns' , fontsize = 24 , loc = 'left')
-#ax.set_ylabel('Percent Change',color='red',fontsize=16)
-#ax.set_xlabel('Date',color='red',fontsize=16)
-#ax.tick_params(axis='x',labelcolor='blue')
-#ax.tick_params(axis='y',labelcolor='blue')
-#ax.ticklabel_format(useOffset = False)
 plt.suptitle('Percent Daily Returns' , size = 24 , color = 'blue')
 plt.show()
 
 # Create bar graph showing correlation with the SP 500
+
 print('---------------------------------------------------------')
 corr_1 = corr['SP500']
 least_correlated = corr_1.sort_values( ascending= False)
@@ -176,7 +184,7 @@ print(reg_table)
 
 breakpoint()
 
-print('hello')
+print('Good luck with your Investments!!!!')
 
 
 
