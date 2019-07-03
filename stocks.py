@@ -22,7 +22,6 @@ stats_url = os.path.join(os.path.dirname(__file__),  "stats.csv")
 ## Create an empty list and dictionary and append/update based on data inputted. 
 
 
-
 print('---------------------------------------------------------')
 print('PORTFOLIO ANLYSIS')
 print('---------------------------------------------------------')
@@ -60,9 +59,9 @@ sp500 = sp500['Adj Close']
 sp500 = pd.DataFrame(sp500).reset_index()
 sp500.columns = ['Date','SP500']
 sp500 = sp500.round(2)
-print('---------------------------------------------------------------')
+print('----------------------------------------------------------------------------------')
 print('Portfolio' , dic , sep = '    ')
-print('---------------------------------------------------------------')
+print('----------------------------------------------------------------------------------')
 print('MY PORTFOLIO')
 
 ### Pull data for our portfolio of stocks
@@ -112,9 +111,9 @@ stats.to_csv(stats_url)
 
 ## select most and least volatile stocks
 std_dev = stats.loc['STD_DEV']
-most_volatile=std_dev.sort_values( ascending= False)
-most_volatile_stock= most_volatile.index[0]
-least_volatile_stock= most_volatile.index[-1]
+most_volatile = std_dev.sort_values( ascending= False)
+most_volatile_stock = most_volatile.index[0]
+least_volatile_stock = most_volatile.index[-1]
 
 
 # Create a dictionary of stock symbol as keys and total in dollar amount as values
@@ -144,8 +143,8 @@ ex = [0.1 for i in range(len(list(value_stocks.keys())))]
 explode = tuple(ex)
 labels = list(value_stocks.keys())
 sizes = list(value_stocks.values())
-plt.title('% Stock Values' , bbox={'facecolor':'0.5', 'pad':4} , loc = 'left',fontsize = 14 )
-plt.pie(sizes, explode = explode ,labels = labels, autopct='%1.1f%%', shadow=True, startangle=140)
+plt.title('% Stock Values' , bbox={'facecolor':'0.5', 'pad':4} , loc = 'left',fontsize = 18 )
+plt.pie(sizes, explode = explode ,labels = labels, autopct='%1.1f%%', shadow=True, startangle=90)
 plt.axis('equal')
 plt.show()
 
