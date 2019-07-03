@@ -4,17 +4,20 @@ INSTALLATION:
 
 Depending upon their set up environment, the user may  need to install certain packages.  Please check the documentation for each to install the latest version.  For example, for the pandas_datareader, the installation instructions are given below. The packages used are as follows:
 
-pandas   
-pandas_DataReader   # pip install pandas-datareader
-statsmodels   
-matplotlib   
+1)pandas   
+
+2) pandas_DataReader   # pip install pandas-datareader
+
+3) statsmodels   
+
+4 )matplotlib   
 
 The modules that need to be imported are as follows:
 
-datetime
-os
-sys
-timedelta
+1) datetime
+2) os
+3 )sys
+4 )timedelta
 
 EXECUTING THE CODE:
 
